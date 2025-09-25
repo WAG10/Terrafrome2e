@@ -1,0 +1,33 @@
+trigger:
+  branches:
+    include:
+      - main  # Trigger pipeline on commits to the main branch
+
+pool:
+  vmImage: 'windows-latest'
+
+variables:
+  terraformVersion: '1.13.3'  # Specify the Terraform version
+  azureServiceConnection: 'shashi sub svc conn'  # Azure service connection name
+  backendResourceGroup: 'skink-rg' # Remote backend Resource Group
+  backendStorageAccount: 'skinktfstateshashi'  # Remote backend storage account
+  backendContainer: 'tfstate'  # Remote backend storage container
+  backendKey: 'terraform.tfstate'  # State file name in remote backend
+
+stages:
+  # Stage 1: Initialization (init, validate, lint)
+  - stage: Initialization
+    jobs:
+      - job: TerraformInit
+        steps:
+          - task: TerraformInstaller@1
+            inputs:
+              terraformVersion: 'latest'
+          - task: TerraformTask@5
+            inputs:
+              provider: 'azurerm'
+              command: 'init'
+              backendServiceArm: 'shashi sub svc conn'
+              backendAzureRmStorageAccountName: 'skinktfstateshashi'
+              backendAzureRmContainerName: 'tfstate'
+              backendAzureRmKey: 'tfstate.state'
