@@ -56,4 +56,4 @@ stages:
             inputs:
               provider: 'azurerm'
               command: 'plan'
-              environmentServiceNameAzureRM: 'shashi sub svc conn'
+              environmentServiceNameAzureRM: 'shashi sub svc conn' 
