@@ -28,13 +28,13 @@ stages:
           - task: TerraformTaskV4@4
             inputs:
               provider: 'azurerm'
-              backendServiceArm: $(azureServiceConnection)
-              backendAzureRmResourceGroupName: $(backendResourceGroup)
-              backendAzureRmStorageAccountName: $(backendStorageAccount)
-              backendAzureRmContainerName: $(backendContainer)
-              backendAzureRmKey: $(backendKey)
-              command: 'init'  # Initialize Terraform
-              workingDirectory: 'terraform'  # Set the working directory
+              command: 'init'
+              workingDirectory: 'terraform'
+              backendServiceArm: 'shashi sub svc conn'
+              backendAzureRmResourceGroupName: 'skink-rg'
+              backendAzureRmStorageAccountName: 'skinktfstateshashi'
+              backendAzureRmContainerName: 'tfstate'
+              backendAzureRmKey: 'terraform.tfstate'
 
           # Validate Terraform configuration
           - task: TerraformTaskV4@4
