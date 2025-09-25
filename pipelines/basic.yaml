@@ -23,36 +23,12 @@ stages:
           - task: TerraformInstaller@0  # Install Terraform
             inputs:
               terraformVersion: $(terraformVersion)
-
-          # Initialize Terraform
-          - task: TerraformTaskV4@4
+          
+          - task: TerraformTask@5
             inputs:
               provider: 'azurerm'
               command: 'init'
-              workingDirectory: 'terraform'
               backendServiceArm: 'shashi sub svc conn'
-              backendAzureRmResourceGroupName: 'skink-rg'
               backendAzureRmStorageAccountName: 'skinktfstateshashi'
               backendAzureRmContainerName: 'tfstate'
-              backendAzureRmKey: 'terraform.tfstate'
-
-          # Validate Terraform configuration
-          - task: TerraformTaskV4@4
-            inputs:
-              provider: 'azurerm'
-              command: 'validate'  # Validate Terraform configuration
-              workingDirectory: 'terraform'
-          - task: TerraformTaskV4@4
-            inputs:
-              provider: 'azurerm'
-              command: 'plan'  # Run terraform plan
-              environmentServiceNameAzureRM: $(azureServiceConnection)  # Azure service connection for authentication
-              workingDirectory: 'terraform'  # Set the working directory
-          - task: TerraformTaskV4@4
-            inputs:
-              provider: 'azurerm'
-              command: 'apply'  # Run terraform apply
-              backendServiceArm: $(azureServiceConnection)
-              commandOptions: '--auto-approve'
-              environmentServiceNameAzureRM: $(azureServiceConnection)  # Azure service connection for authentication
-              workingDirectory: 'terraform'  # Set the working directory
+              backendAzureRmKey: 'tfstate.state'
