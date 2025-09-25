@@ -31,3 +31,25 @@ stages:
             inputs:
               provider: 'azurerm'
               command: 'validate'
+  - stage: tfdeploy
+    condition: succeeded("Initialization")
+    dependsOn: Initialization
+    jobs:
+      - job: apply
+        steps:
+          - task: TerraformInstaller@1
+            inputs:
+              terraformVersion: 'latest'
+          - task: TerraformTask@5
+            inputs:
+              provider: 'azurerm'
+              command: 'init'
+              backendServiceArm: 'shashi sub svc conn'
+              backendAzureRmStorageAccountName: 'skinktfstateshashi'
+              backendAzureRmContainerName: 'tfstate'
+              backendAzureRmKey: 'tfstate.state' 
+          - task: TerraformTask@5
+            inputs:
+              provider: 'azurerm'
+              command: 'plan'
+              environmentServiceNameAzureRM: 'shashi sub svc conn'
