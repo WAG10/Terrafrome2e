@@ -32,7 +32,7 @@ stages:
               provider: 'azurerm'
               command: 'validate'
   - stage: tfdeploy
-    condition: succeeded("Initialization")
+    condition: succeeded('Initialization')
     dependsOn: Initialization
     jobs:
       - job: apply
