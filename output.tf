@@ -8,7 +8,4 @@ output "key-vault-url" {
   value       = module.keyvault.key-vault-url
 }
 
-output "key-vault-secrets" {
-  value = module.keyvault.key-vault-secrets
-  sensitive = true
-}
+
