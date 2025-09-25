@@ -36,12 +36,16 @@ stages:
           - task: TerraformInstaller@1
             inputs:
               terraformVersion: 'latest'
-          - script: |
-              export ARM_CLIENT_ID=$(ARM_CLIENT_ID)
-              export ARM_CLIENT_SECRET=$(ARM_CLIENT_SECRET)
-              export ARM_SUBSCRIPTION_ID=$(ARM_SUBSCRIPTION_ID)
-              export ARM_TENANT_ID=$(ARM_TENANT_ID)
-            displayName: 'Set Azure Authentication Variables'
+          - task: AzureCLI@2
+            inputs:
+              azureSubscription: 'shashi sub svc conn'
+              scriptType: 'ps'
+              scriptLocation: 'inlineScript'
+              inlineScript: |
+                $env:ARM_CLIENT_ID = $(ARM_CLIENT_ID)
+                $env:ARM_CLIENT_SECRET =  $(ARM_CLIENT_SECRET )
+                $env:ARM_TENANT_ID =  $(ARM_TENANT_ID )
+                $env:ARM_SUBSCRIPTION_ID =  $(ARM_SUBSCRIPTION_ID )
           - task: TerraformTask@5
             inputs:
               provider: 'azurerm'
