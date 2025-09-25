@@ -20,10 +20,6 @@ stages:
     jobs:
       - job: TerraformInit
         steps:
-          - task: TerraformInstaller@0  # Install Terraform
-            inputs:
-              terraformVersion: $(terraformVersion)
-          
           - task: TerraformTask@5
             inputs:
               provider: 'azurerm'
