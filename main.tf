@@ -44,6 +44,6 @@ module "keyvault" {
       storage_permissions     = var.kv-storage-permissions-read
     }
   }
-
+ secrets = var.kv-secrets
  
 }
