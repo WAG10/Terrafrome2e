@@ -45,5 +45,5 @@ module "keyvault" {
     }
   }
 
-  secrets = var.kv-secrets
+ 
 }
